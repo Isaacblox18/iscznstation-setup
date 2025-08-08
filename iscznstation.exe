@@ -1,29 +1,29 @@
 import tkinter as tk
-from tkinter import ttk
+import webbrowser
 
-class ISCZNStationApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("ISCZN Station")
-        self.notebook = ttk.Notebook(root)
-        self.notebook.pack(expand=True, fill='both')
-        self.adicionar_aba()
+def pesquisar(event=None):
+    termo = entrada.get()
+    if termo:
+        url = f"https://www.google.com/search?q={termo}"
+        webbrowser.open(url)
 
-        btn_frame = tk.Frame(root)
-        btn_frame.pack()
-        tk.Button(btn_frame, text="➕ Nova Aba", command=self.adicionar_aba).pack(side='left')
-        tk.Button(btn_frame, text="❌ Fechar Aba", command=self.fechar_aba).pack(side='left')
+# Criar janela principal
+janela = tk.Tk()
+janela.title("ISCZN Station - Pesquisa")
+janela.geometry("600x150")
+janela.configure(bg="#f2f2f2")
 
-    def adicionar_aba(self):
-        aba = tk.Frame(self.notebook)
-        self.notebook.add(aba, text=f"Aba {len(self.notebook.tabs()) + 1}")
-        tk.Label(aba, text="Conteúdo da aba").pack()
+# Título
+titulo = tk.Label(janela, text="🔎 ISCZN Station - Pesquisa Google", font=("Arial", 16), bg="#f2f2f2")
+titulo.pack(pady=10)
 
-    def fechar_aba(self):
-        if self.notebook.tabs():
-            self.notebook.forget(self.notebook.index("current"))
+# Campo de entrada
+entrada = tk.Entry(janela, font=("Arial", 14), width=50)
+entrada.pack(pady=5)
+entrada.bind("<Return>", pesquisar)
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = ISCZNStationApp(root)
-    root.mainloop()
+# Botão de pesquisa
+botao = tk.Button(janela, text="Pesquisar", font=("Arial", 12), command=pesquisar)
+botao.pack(pady=5)
+
+janela.mainloop()
